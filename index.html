@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haru Ai</title>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        nav {
+            background-color: transparent;
+            color: #1DB954;
+            padding: 25px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #1DB954,
+                         0 0 20px #1DB954,
+                         0 0 30px #1DB954,
+                         0 0 40px #1DB954,
+                         0 0 70px #1DB954;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        nav a {
+            color: #1DB954;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        nav div {
+            font-size: 24px;
+            text-transform: lowercase;
+        }
+
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #000;
+            color: #1DB954;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            height: 60vh;
+            overflow-y: auto;
+            flex-grow: 1;
+            padding: 20px;
+            background-color: transparent;
+        }
+
+        .message {
+            padding: 20px;
+            margin-bottom: 20px;
+            word-wrap: break-word;
+            display: inline-block;
+            max-width: 80%;
+            position: relative;
+            border-radius: 25px;
+            font-size: 14px;
+        }
+
+        .bot-message, .user-message, .user-input {
+            background-color: transparent;
+            color: #1DB954;
+            border: 1px solid #1DB954;
+            box-shadow: 0 0 10px #1DB954, 
+                       0 0 20px #1DB954,
+                       inset 0 0 10px #1DB954,
+                       inset 0 0 20px #1DB954;
+        }
+
+        .user-message {
+            margin-left: auto;
+        }
+
+        .message-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: transparent;
+            margin: 10px;
+            position: relative;
+        }
+
+
+        .user-input {
+            padding: 15px;
+            border: 1px solid #1DB954;
+            border-radius: 20px;
+            background-color: transparent;
+            font-size: 14px;
+            color: #1DB954;
+            margin-right: 10px;
+            font-family: 'Orbitron', sans-serif;
+            flex-grow: 1;
+            box-shadow: 0 0 10px #1DB954,
+                       0 0 20px #1DB954,
+                       inset 0 0 10px #1DB954,
+                       inset 0 0 20px #1DB954;
+        }
+
+        .user-input:focus {
+            outline: none;
+        }
+
+        .send-button {
+            padding: 15px;
+            border: none;
+            background-color: transparent;
+            color: #1DB954;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            text-shadow: 0 0 10px #1DB954,
+                         0 0 20px #1DB954;
+            transition: text-shadow 0.3s ease;
+        }
+
+        .send-button:hover {
+            text-shadow: 0 0 10px #1DB954,
+                         0 0 20px #1DB954,
+                         0 0 30px #1DB954;
+        }
+
+        #typing-indicator {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            background-color: transparent;
+            color: #1DB954;
+            border: 1px solid #1DB954;
+            box-shadow: 0 0 10px #1DB954,
+                       inset 0 0 10px #1DB954;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+<nav>
+    <a href="#">GPT-4o</a>
+    <div>made by: Haru</div>
+</nav>
+<div id="particles-js"></div>
+<div class="container" id="container">
+    <div class="message-wrapper">
+        <div class="message bot-message">Haru Lynx AI, How can I help you today?</div>
+    </div>
+</div>
+<div class="input-container">
+    <input type="text" id="user-input" class="user-input" placeholder="Type a message...">
+    <button id="send-button" class="send-button">Send</button>
+</div>
+<script>
+    particlesJS("particles-js", {
+        particles: {
+            number: { value: 80, density: { enable: true, value_area: 800 } },
+            color: { value: "#1DB954" },
+            shape: {
+                type: "circle",
+                stroke: { width: 0, color: "#000000" },
+                polygon: { nb_sides: 5 }
+            },
+            opacity: { value: 0.5, anim: { enable: false } },
+            size: { value: 3, random: true, anim: { enable: false } },
+            line_linked: {
+                enable: true,
+                distance: 150,
+                color: "#1DB954",
+                opacity: 0.4,
+                width: 1
+            },
+            move: {
+                enable: true,
+                speed: 6,
+                direction: "none",
+                out_mode: "out"
+            }
+        },
+        interactivity: {
+            detect_on: "canvas",
+            events: {
+                onhover: { enable: true, mode: "repulse" },
+                onclick: { enable: true, mode: "push" },
+                resize: true
+            },
+            modes: {
+                grab: { distance: 400 },
+                bubble: { distance: 400, size: 40 },
+                repulse: { distance: 200 },
+                push: { particles_nb: 4 }
+            }
+        },
+        retina_detect: true
+    });
+
+    async function fetchBotResponse(userInput) {
+        console.log("User Input:", userInput);
+        const apiUrl = `https://joshweb.click/api/gpt-4o?q=${encodeURIComponent(userInput)}&uid=YOUR_UID`; 
+        console.log("API URL:", apiUrl);
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'GET',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            console.log("API Response Status:", response.status);
+
+            const textResponse = await response.text();  
+            console.log("Raw API Response Text:", textResponse);
+
+            if (textResponse.includes("<html>") || textResponse.includes("<body>")) {
+                throw new Error("Received HTML response instead of JSON. Likely an API issue.");
+            }
+
+            const data = JSON.parse(textResponse);
+            console.log("API Response Data:", data);
+
+            if (data && data.result) {
+                return data.result;  
+            } else {
+                return "Sorry, I couldn't process that.";
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            return `Error: ${error.message}`;
+        }
+    }
+
+    async function handleSendMessage() {
+        const userInput = document.getElementById("user-input").value.trim();
+        if (!userInput) return;
+
+        console.log("Sending message:", userInput);
+
+        const messageWrapper = document.createElement("div");
+        messageWrapper.className = "message-wrapper";
+        
+        const userMessage = document.createElement("div");
+        userMessage.className = "message user-message";
+        userMessage.textContent = userInput;
+        messageWrapper.appendChild(userMessage);
+        document.getElementById("container").appendChild(messageWrapper);
+        document.getElementById("user-input").value = "";
+
+        const typingIndicator = document.createElement("div");
+        typingIndicator.id = "typing-indicator";
+        typingIndicator.textContent = "Typing...";
+        document.body.appendChild(typingIndicator);
+
+        try {
+            const botResponse = await fetchBotResponse(userInput);
+            console.log("Bot Response:", botResponse);
+            document.body.removeChild(typingIndicator);
+
+            const botMessageWrapper = document.createElement("div");
+            botMessageWrapper.className = "message-wrapper";
+            
+            const botMessage = document.createElement("div");
+            botMessage.className = "message bot-message";
+            botMessage.textContent = botResponse;
+            botMessageWrapper.appendChild(botMessage);
+            document.getElementById("container").appendChild(botMessageWrapper);
+        } catch (error) {
+            document.body.removeChild(typingIndicator);
+
+            const errorWrapper = document.createElement("div");
+            errorWrapper.className = "message-wrapper";
+            
+            const errorMessage = document.createElement("div");
+            errorMessage.className = "message bot-message";
+            errorMessage.textContent = `Error: ${error.message}`;
+            errorWrapper.appendChild(errorMessage);
+            document.getElementById("container").appendChild(errorWrapper);
+        }
+
+        document.getElementById("container").scrollTop = document.getElementById("container").scrollHeight;
+    }
+
+    document.getElementById("send-button").addEventListener("click", handleSendMessage);
+    document.getElementById("user-input").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleSendMessage();
+    });
+</script>
+</body>
+</html>
